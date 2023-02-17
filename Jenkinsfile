@@ -5,7 +5,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Starting analysis code'
-                sh 'sonar-scanner -h'
+                sh 'sudo sonar-scanner -h'
             }
         }
         // Build the docker images
