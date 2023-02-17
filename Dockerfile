@@ -45,4 +45,6 @@ COPY . /app
 
 EXPOSE 80/tcp
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN chmod +x /app/start.sh
+
+CMD ["/app/start.sh"]
