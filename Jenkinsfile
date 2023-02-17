@@ -1,6 +1,20 @@
 pipeline {
     agent any
     stages {
+        // Add environment for sonar project properties
+        stage('Add environment for sonar project') {
+            environment {
+                sq_user    = credentials('sq-user')
+                sq_pass    = credentials('sq-pass')
+                sq_key     = credentials('sq-key')
+            }
+            steps {
+                sh '''
+                #!/bin/bash
+                echo -e "\nsonar.projectKey=${sq_key}\nsonar.login=${sq_user}\nsonar.password=${sq_pass}" > sonar-project.properties
+                '''
+            }
+        }
         // SonarQube Analysis
         stage('SonarQube Analysis') {
             environment {
