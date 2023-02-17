@@ -1,2 +1,3 @@
 #!/bin/bash
-sonar-scanner
+cd /root/sonar-scanner/bin/
+./sonar-scanner -h
