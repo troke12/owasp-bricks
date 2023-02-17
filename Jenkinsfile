@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Starting analysis code'
                 sh 'chmod +x sonar-scanner.sh'
-                sh './sonar-scanner.sh'
+                sh 'bash sonar-scanner.sh'
             }
         }
         // Build the docker images
