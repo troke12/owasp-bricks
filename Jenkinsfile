@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo 'Starting analysis code'
                 sh 'cd /opt'
+                sh 'rm -rf *'
                 sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip'
                 sh 'unzip -o sonar-scanner-cli-4.8.0.2856-linux.zip'
                 sh 'cd sonar-scanner-4.8.0.2856-linux/'
