@@ -22,18 +22,14 @@ pipeline {
                 SONARQUBE_URL           = credentials('url-sonarqube')
                 SONARQUBE_PROJECT_KEY   = credentials('key-sonarqube')
                 SONARQUBE_TOKEN         = credentials('token-sonarqube')
-                sq_user                 = credentials('sq-user')
-                sq_pass                 = credentials('sq-pass')
-                REPOSITORY              = "owasp-bricks"
             }
             steps {
                 echo 'Starting to inspect and scan the code analysis with SonarQube...'
-                sh 'docker run \
-                --rm \
+                sh 'docker run --rm \
                 -e SONAR_HOST_URL=${SONARQUBE_URL} \
-                -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${SONARQUBE_PROJECT_KEY},-Dsonar.login=${sq_user},-Dsonar.password=${sq_pass}" \
+                -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${SONARQUBE_PROJECT_KEY}" \
                 -e SONAR_LOGIN=${SONARQUBE_TOKEN} \
-                -v "${REPOSITORY}:/usr/src" \
+                -v "$(pwd):/usr/src" \
                 sonarsource/sonar-scanner-cli'
             }
         }
