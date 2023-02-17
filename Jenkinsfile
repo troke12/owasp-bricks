@@ -26,7 +26,8 @@ pipeline {
                 docker stop owasp-bricks
                 docker container prune -f
                 set -e
-                docker run --restart always -d -p 8080:80 --name owasp-bricks troke12/owasp-bricks:${BUILD_NUMBER}'
+                docker run --restart always -d -p 8080:80 --name owasp-bricks troke12/owasp-bricks:${BUILD_NUMBER}
+                docker image prune -af
                 '''
             }
         }
