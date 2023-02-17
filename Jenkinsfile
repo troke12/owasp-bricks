@@ -5,6 +5,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Starting analysis code'
+                sh 
                 sh 'sudo sonar-scanner'
             }
         }
@@ -23,7 +24,7 @@ pipeline {
                 #!/bin/bash
                 set +e
                 docker stop owasp-bricks
-                docker container prune -af
+                docker container prune -f
                 set -e
                 docker run --restart always -d -p 8080:80 --name owasp-bricks troke12/owasp-bricks:${BUILD_NUMBER}'
                 '''
