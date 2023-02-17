@@ -14,7 +14,7 @@ pipeline {
                 echo 'Starting analysis code'
                 sh 'cd /opt'
                 sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip'
-                sh 'unzip sonar-scanner-cli-4.8.0.2856-linux.zip'
+                sh 'unzip -f sonar-scanner-cli-4.8.0.2856-linux.zip'
                 sh 'cd sonar-scanner-4.8.0.2856-linux/'
                 sh 'chmod +x sonar-scanner'
                 sh 'ln -s /opt/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner'
