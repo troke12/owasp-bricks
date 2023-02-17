@@ -32,7 +32,7 @@ pipeline {
                 -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${SONARQUBE_PROJECT_KEY}" \
                 -e SONAR_LOGIN=${SONARQUBE_TOKEN} \
                 -v "${REPOSITORY}:/usr/src" \
-                -v "./sonar-project.properties:/opt/sonar-scanner/conf/" \
+                -v $(pwd)/sonar-project.properties:/opt/sonar-scanner/conf/sonar-project.properties \
                 sonarsource/sonar-scanner-cli'
             }
         }
