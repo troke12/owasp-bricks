@@ -4,9 +4,8 @@ pipeline {
         // SonarQube Analysis
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarScanner') {
-                    sh "sonar-scanner"
-                }
+                echo 'Starting analysis code'
+                sh 'sonar-scanner'
             }
         }
         // Build the docker images
