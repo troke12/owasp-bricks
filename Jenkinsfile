@@ -12,6 +12,7 @@ pipeline {
                 sh '''
                 #!/bin/bash
                 echo -e "\nsonar.projectKey=${sq_key}\nsonar.login=${sq_user}\nsonar.password=${sq_pass}" > sonar-project.properties
+                ls -l
                 '''
             }
         }
