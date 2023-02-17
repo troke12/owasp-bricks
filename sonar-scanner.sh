@@ -1,0 +1,2 @@
+#!/bin/bash
+sonar-scanner
