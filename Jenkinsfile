@@ -5,7 +5,6 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Starting analysis code'
-                sh 
                 sh 'sudo sonar-scanner'
             }
         }
