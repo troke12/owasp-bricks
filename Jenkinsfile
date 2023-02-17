@@ -4,9 +4,25 @@ pipeline {
         // SonarQube Analysis
         stage('SonarQube Analysis') {
             steps {
+                environment {
+                    sq_user = credentials('sq-user')
+                    sq_pass = credentials('sq-pass')
+                    sq_project = "owasppro"
+                    sq_host = "http://localhost:9000"
+                    sq_encoding = "UTF-8"
+                }
                 echo 'Starting analysis code'
-                sh 'chmod +x sonar-scanner.sh'
-                sh 'bash sonar-scanner.sh'
+                sh 'cd /opt'
+                sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip'
+                sh 'unzip sonar-scanner-cli-4.8.0.2856-linux.zip'
+                sh 'cd sonar-scanner-cli-4.8.0.2856-linux/'
+                sh 'chmod +x sonar-scanner'
+                sh 'ln -s /opt/sonar-scanner-cli-4.8.0.2856-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner'
+                sh '''
+                #!/bin/bash
+                echo -e "sonar.projectKey=${sq_project}\nsonar.host.url=${sq_host}\nsonar.sourceEncoding=${sq_encoding}\nsonar.login=${sq_user}\nsonar.password=${sq_password}" > /opt/sonar-scanner-cli-4.8.0.2856-linux/conf/sonar-scanner.properties"
+                '''
+                sh 'sonar-scanner -h'
             }
         }
         // Build the docker images
