@@ -3,7 +3,6 @@ pipeline {
     stages {
         // SonarQube Analysis
         stage('SonarQube Analysis') {
-            when { branch 'main' }
             environment {
                 SONARQUBE_URL           = credentials('url-sonarqube')
                 SONARQUBE_PROJECT_KEY   = credentials('key-sonarqube')
@@ -23,7 +22,6 @@ pipeline {
         }
         // Build the docker images
         stage('Build the docker') {
-            when { branch 'main' }
             steps {
                 echo 'Start building docker...'
                 sh 'docker build -t troke12/owasp-bricks:${BUILD_NUMBER} .'
@@ -31,7 +29,6 @@ pipeline {
         }
         // Deploy it
         stage('Deploy to the server') {
-            when { branch 'main' }
             steps {
                 echo 'Starting deploy the application....'
                 sh '''
