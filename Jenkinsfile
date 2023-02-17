@@ -3,14 +3,14 @@ pipeline {
     stages {
         // SonarQube Analysis
         stage('SonarQube Analysis') {
+            environment {
+                sq_user = credentials('sq-user')
+                sq_pass = credentials('sq-pass')
+                sq_project = "owasppro"
+                sq_host = "http://localhost:9000"
+                sq_encoding = "UTF-8"
+            }
             steps {
-                environment {
-                    sq_user = credentials('sq-user')
-                    sq_pass = credentials('sq-pass')
-                    sq_project = "owasppro"
-                    sq_host = "http://localhost:9000"
-                    sq_encoding = "UTF-8"
-                }
                 echo 'Starting analysis code'
                 sh 'cd /opt'
                 sh 'wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip'
