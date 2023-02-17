@@ -3,31 +3,35 @@ pipeline {
     stages {
         // SonarQube Analysis
         stage('SonarQube Analysis') {
+            when { branch 'main' }
+            environment {
+                SONARQUBE_URL           = credentials('url-sonarqube')
+                SONARQUBE_PROJECT_KEY   = credentials('key-sonarqube')
+                SONARQUBE_TOKEN         = credentials('token-sonarqube')
+                REPOSITORY              = "owasp-bricks"
+            }
             steps {
-                echo 'Inspect code with sonar-scanner and upload result to SonarQube server'
+                echo 'Starting to inspect and scan the code analysis with SonarQube...'
                 sh 'docker run \
                 --rm \
                 -e SONAR_HOST_URL="http://${SONARQUBE_URL}" \
-                -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${YOUR_PROJECT_KEY}" \
-                -e SONAR_LOGIN="myAuthenticationToken" \
-                -v "${YOUR_REPO}:/usr/src" \
+                -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${SONARQUBE_PROJECT_KEY}" \
+                -e SONAR_LOGIN=${SONARQUBE_TOKEN} \
+                -v "${REPOSITORY}:/usr/src" \
                 sonarsource/sonar-scanner-cli'
             }
         }
         // Build the docker images
-        stage('Build For Master') {
-            when { branch 'master' }
-            environment {
-
-            }
+        stage('Build the docker') {
+            when { branch 'main' }
             steps {
-                echo 'Starting building for master'
+                echo 'Start building docker...'
                 sh 'docker build -t troke12/owasp-bricks:${BUILD_NUMBER} .'
             }
         }
         // Deploy it
-        stage('Deploy to production server') {
-            when { branch 'master' }
+        stage('Deploy to the server') {
+            when { branch 'main' }
             steps {
                 echo 'Starting deploy the application....'
                 sh '''
